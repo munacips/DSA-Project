@@ -1,0 +1,25 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+    <h1>Student Data</h1>
+    <div class="split">
+        <div class="sort">
+            <h2>Sorting</h2>
+            <form action="/sort/" method="post">
+                {% csrf_token %}
+                {{sortForm.as_p}}
+                <input type="submit" value="Sort">
+            </form>
+        </div>
+        <div class="search">
+            <h2>Searching</h2>
+            <form action="/search/" method="post">
+                {% csrf_token %}
+                {{searchForm.as_p}}
+                <input type="submit" value="search">
+            </form>
+        </div>
+    </div>
+    <div class="results">
+
+    </div>
+{% endblock %}
