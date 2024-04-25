@@ -4,7 +4,7 @@
     <div class="split">
         <div class="sort">
             <h2>Sorting</h2>
-            <form action="/sort/" method="post">
+            <form action="/sort/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{sortForm.as_p}}
                 <input type="submit" value="Sort">
@@ -12,14 +12,36 @@
         </div>
         <div class="search">
             <h2>Searching</h2>
-            <form action="/search/" method="post">
+            <form action="/search/" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{searchForm.as_p}}
                 <input type="submit" value="search">
             </form>
         </div>
     </div>
+    <br><br>
+    {% if items %}
     <div class="results">
-
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>Married</th>
+            </thead>
+            {% for item in items %}
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.first_name}}</td>
+                    <td>{{item.last_name}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.dob}}</td>
+                    <td>{{item.married}}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
+    {% endif %}
 {% endblock %}

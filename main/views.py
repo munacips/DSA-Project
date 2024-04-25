@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import SortForm, SearchForm
-from .algorithms import insertionSort, bubbleSort, heapSort, mergeSort, quickSort, bucketSort, radixSort, linearSearch, binarySearch
+from .algorithms import insertionSort, bubbleSort, selectionSort, mergeSort, quickSort, linearSearch, binarySearch
+from .models import Student
 
 def home(request):
     sortForm = SortForm(request.POST or None)
@@ -13,63 +14,53 @@ def home(request):
 
 
 def sort(request):
-    searchForm = SearchForm(request.POST or None)
+    searchForm = SearchForm()
     form = SortForm(request.POST or None)
     if form.is_valid():
         algorithm = form.cleaned_data['algorithm']
         field = form.cleaned_data['field']
         #get data from a particular field and pass it to the function
         #from the results we can then match to see which item represents which record
-        if algorithm == 'a':
-            items = insertionSort()
+        if algorithm == 'a': # done
+            items = insertionSort(field)
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
                 'items' : items
             }
             return render(request,'main/home.html',context)
-        elif algorithm == 'b':
-            items = bubbleSort()
+        elif algorithm == 'b': # done
+            items = bubbleSort(field)
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
                 'items' : items
             }
             return render(request,'main/home.html',context)     
-        elif algorithm == 'c':
-            items = heapSort()
+        elif algorithm == 'c': #done
+            items = selectionSort(field)
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
                 'items' : items
             }
             return render(request,'main/home.html',context)
-        elif algorithm == 'd':
-            items = mergeSort()
+        elif algorithm == 'd': # done
+            students = Student.objects.all()
+            elements = list(students)
+            items = mergeSort(elements,field)
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
                 'items' : items
             }
             return render(request,'main/home.html',context) 
-        elif algorithm == 'e':
-            items = quickSort()
-            context = {
-                'sortForm' : form,
-                'searchForm' : searchForm,
-                'items' : items
-            }
-            return render(request,'main/home.html',context)
-        elif algorithm == 'f':
-            items = bucketSort()
-            context = {
-                'sortForm' : form,
-                'searchForm' : searchForm,
-                'items' : items
-            }
-            return render(request,'main/home.html',context)
-        elif algorithm == 'g':
-            items = radixSort()
+        elif algorithm == 'e': #done
+            students = Student.objects.all()
+            elements = list(students)
+            start = 0
+            end = len(elements) -1
+            items = quickSort(elements,start,end,field)
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
@@ -79,7 +70,7 @@ def sort(request):
 
 def search(request):
     form = SearchForm(request.POST or None)
-    sortForm = SortForm(request.POST or None)
+    sortForm = SortForm()
     if form.is_valid():
         algorithm = form.cleaned_data['algorithm']
         query = form.cleaned_data['query']

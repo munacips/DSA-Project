@@ -16,3 +16,19 @@ html, body{
     text-align: center;
     padding: 1em;
 }
+.results{
+    width: max-content;
+    margin: auto;
+}
+table{
+    background-color: whitesmoke;
+}
+td{
+    padding: 0.25em;
+}
+th{
+    padding: 0.25em;
+}
+tr :nth-child(even){
+    background-color: rgb(196, 196, 196);
+}

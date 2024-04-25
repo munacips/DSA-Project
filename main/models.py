@@ -8,4 +8,4 @@ class Student(models.Model):
     married = models.BooleanField()
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return self.first_name + ' ' +self.last_name
