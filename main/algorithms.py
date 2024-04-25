@@ -132,22 +132,15 @@ def swap(a, b, arr):
         arr[a] = arr[b]
         arr[b] = tmp
 
-def bucketSort(field):
+def linearSearch(query,field):
     students = Student.objects.all()
     elements = list(students)
-    return 0
+    for element in elements:
+        if str(getattr(element,field)) == str(query):
+            return True, element
+    return False, 0
 
-def radixSort(field):
-    students = Student.objects.all()
-    elements = list(students)
-    return 0
-
-def linearSearch(field):
-    students = Student.objects.all()
-    elements = list(students)
-    return 0, 0
-
-def binarySearch(field):
+def binarySearch(query,field):
     students = Student.objects.all()
     elements = list(students)
     return 0, 0

@@ -76,11 +76,13 @@ def search(request):
         query = form.cleaned_data['query']
         field = form.cleaned_data['field']
         if algorithm == 'a':
-            found, index = linearSearch()
+            found, element = linearSearch(query,field)
             context = {
                 'sortForm' : sortForm,
                 'searchForm' : form,
-                'results' : [found,index]
+                'found' : found,
+                'element' : element,
+                'results' : True
             }
             return render(request,'main/home.html',context)
         if algorithm == 'b':

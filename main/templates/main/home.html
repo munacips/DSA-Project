@@ -44,4 +44,14 @@
         </table>
     </div>
     {% endif %}
+    {% if results %}
+        <div class="search-results">
+            {% if found %}
+                <span>Found || {{element}}</span>
+            {% endif %}
+            {% if found == False %}
+                <span>Not Found</span>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}

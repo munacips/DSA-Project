@@ -23,7 +23,7 @@ class SearchForm(forms.Form):
     ]
     FIELDS = []
     for field in Student._meta.get_fields():
-        FIELDS.append((field,field.name))
+        FIELDS.append((field.name,field.name))
     field = forms.ChoiceField(choices=FIELDS,widget=forms.Select(attrs={'placeholder':'Select field'}),label='')
     query = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Search for...'}),label='')
     algorithm = forms.ChoiceField(choices=ALGORITHMS,widget=forms.Select(attrs={'placeholder':'Select algorithm'}),label='')
