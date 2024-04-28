@@ -19,7 +19,8 @@ class SortForm(forms.Form):
 class SearchForm(forms.Form):
     ALGORITHMS = [
         ('a','Linear Search'),
-        ('b','Binary Search')
+        ('b','Binary Search'),
+        ('c','Ordered Search')
     ]
     FIELDS = []
     for field in Student._meta.get_fields():

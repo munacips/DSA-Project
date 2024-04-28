@@ -1,20 +1,6 @@
 from .models import Student
 
 
-# def insertionSort(field):
-#     students = Student.objects.values_list(field,'id')
-#     elements = list(students)
-#     lists = [list(tup) for tup in elements]
-#     elements = lists
-#     for i in range(1, len(elements)):
-#         anchor = elements[i][0]
-#         j = i - 1
-#         while j>=0 and anchor < elements[j][0]:
-#             elements[j+1][0] = elements[j][0]
-#             j = j - 1
-#         elements[j+1][0] = anchor
-#     return elements
-
 def insertionSort(field):
     students = Student.objects.all()
     elements = list(students)
@@ -137,10 +123,38 @@ def linearSearch(query,field):
     elements = list(students)
     for element in elements:
         if str(getattr(element,field)) == str(query):
-            return True, element
-    return False, 0
+            return True, element, elements.index(element)
+    return False, 0, 0
 
 def binarySearch(query,field):
-    students = Student.objects.all()
+    students = Student.objects.all().order_by(field)
     elements = list(students)
-    return 0, 0
+    size_of_list = len(elements) - 1
+
+    index_of_first_element = 0
+    index_of_last_element = size_of_list
+    found = False
+
+    while index_of_first_element <= index_of_last_element:
+        mid_point = (index_of_first_element + index_of_last_element)//2
+
+        if str(getattr(elements[mid_point],field)) == query:
+            found = True
+            return found, elements[mid_point], mid_point
+
+        if query > str(getattr(elements[mid_point],field)):
+            index_of_first_element = mid_point + 1
+        else:
+            index_of_last_element = mid_point - 1
+    if not found:
+        return found, 0, 0
+    
+def orderedSearch(query,field):
+    students = Student.objects.all().order_by(field)
+    elements = list(students)
+    elements_size = len(elements)
+    for i in range(elements_size):
+        if query == str(getattr(elements[i],field)):
+            return True, elements[i], i
+        elif str(getattr(elements[i],field)) > query:
+            return False, 0, 0

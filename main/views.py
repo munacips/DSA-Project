@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import SortForm, SearchForm
-from .algorithms import insertionSort, bubbleSort, selectionSort, mergeSort, quickSort, linearSearch, binarySearch
+from .algorithms import insertionSort, bubbleSort, orderedSearch, selectionSort, mergeSort, quickSort, linearSearch, binarySearch
 from .models import Student
 
 def home(request):
@@ -76,20 +76,35 @@ def search(request):
         query = form.cleaned_data['query']
         field = form.cleaned_data['field']
         if algorithm == 'a':
-            found, element = linearSearch(query,field)
+            found, element, index = linearSearch(query,field)
             context = {
                 'sortForm' : sortForm,
                 'searchForm' : form,
                 'found' : found,
                 'element' : element,
-                'results' : True
+                'results' : True,
+                'index' : index
             }
             return render(request,'main/home.html',context)
         if algorithm == 'b':
-            found, index = binarySearch()
+            found, element, index = binarySearch(query,field)
             context = {
                 'sortForm' : sortForm,
                 'searchForm' : form,
-                'results' : [found,index]
+                'found' : found,
+                'element' : element,
+                'results' : True,
+                'index' : index
+            }
+            return render(request,'main/home.html',context)
+        if algorithm == 'c':
+            found, element, index = orderedSearch(query,field)
+            context = {
+                'sortForm' : sortForm,
+                'searchForm' : form,
+                'found' : found,
+                'element' : element,
+                'results' : True,
+                'index' : index
             }
             return render(request,'main/home.html',context)
