@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import SortForm, SearchForm
+from .forms import SortForm, SearchForm, AddStudentForm
 from .algorithms import insertionSort, bubbleSort, orderedSearch, selectionSort, mergeSort, quickSort, linearSearch, binarySearch
 from .models import Student
 
@@ -23,6 +23,8 @@ def sort(request):
         #from the results we can then match to see which item represents which record
         if algorithm == 'a': # done
             items = insertionSort(field)
+            if form.cleaned_data['descending']:
+                items = items[::-1]
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
@@ -31,6 +33,8 @@ def sort(request):
             return render(request,'main/home.html',context)
         elif algorithm == 'b': # done
             items = bubbleSort(field)
+            if form.cleaned_data['descending']:
+                items = items[::-1]
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
@@ -39,6 +43,8 @@ def sort(request):
             return render(request,'main/home.html',context)     
         elif algorithm == 'c': #done
             items = selectionSort(field)
+            if form.cleaned_data['descending']:
+                items = items[::-1]
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
@@ -48,7 +54,9 @@ def sort(request):
         elif algorithm == 'd': # done
             students = Student.objects.all()
             elements = list(students)
-            items = mergeSort(elements,field)
+            items = mergeSort(field)
+            if form.cleaned_data['descending']:
+                items = items[::-1]
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
@@ -61,6 +69,8 @@ def sort(request):
             start = 0
             end = len(elements) -1
             items = quickSort(elements,start,end,field)
+            if form.cleaned_data['descending']:
+                items = items[::-1]
             context = {
                 'sortForm' : form,
                 'searchForm' : searchForm,
@@ -108,3 +118,28 @@ def search(request):
                 'index' : index
             }
             return render(request,'main/home.html',context)
+        
+
+def addstudent(request):
+    form = AddStudentForm(request.POST or None)
+    if form.is_valid():
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        email = form.cleaned_data['email']
+        dob = form.cleaned_data['dob']
+        married = form.cleaned_data['married']
+        bank_balance = form.cleaned_data['bank_balance']
+        new_student, created = Student.objects.get_or_create(first_name=first_name,last_name=last_name,email=email,dob=dob,married=married,bank_balance=bank_balance)
+        if created:
+            new_student.save() #redundant
+            sortForm = SortForm()
+            searchForm = SearchForm()
+            context = {
+                'sortForm' : sortForm,
+                'searchForm' : searchForm
+            }
+            return render(request,'main/home.html',context)
+    context = {
+        'form' : form
+    }
+    return render(request,'main/add_students.html',context)

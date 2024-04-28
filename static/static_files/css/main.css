@@ -32,3 +32,12 @@ th{
 tr :nth-child(even){
     background-color: rgb(196, 196, 196);
 }
+.addstudent{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    background-color: whitesmoke;
+    border-radius: 1em;
+    border: 1px solid whitesmoke;
+    text-align: center;
+}
