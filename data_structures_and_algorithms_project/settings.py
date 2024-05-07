@@ -85,6 +85,18 @@ DATABASES = {
 # DATABASES = {
 #     'default' : {
 #         'ENGINE' : 'django.db.backends.postgresql',
+#         'NAME' : 'students',
+#         'USER' : '',
+#         'PASSWORD' : 'munashe',
+#         'HOST' : '127.0.0.1',
+#         'PORT' : '5432'
+
+#     }
+# }
+
+# DATABASES = {
+#     'default' : {
+#         'ENGINE' : 'django.db.backends.postgresql',
 #         'NAME' : 'dsa_database',
 #     }
 # }
